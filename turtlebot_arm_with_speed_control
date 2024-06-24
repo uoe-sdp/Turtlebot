@@ -8,12 +8,12 @@ from time import time, sleep
 # processes the data from the ROSTopic named "joint_states" 
 def joint_callback(data):  
     print("Msg: {}".format(data.header.seq))  
-    print("Wheel Positions:\n\tLeft: {0:.2f}rad\n\tRight: {0:.2f}rad\n\n".forma$
-    print("Joint Positions:\n\tShoulder1: {0:.2f}rad\n\tShoulder2: {0:.2f}rad\n$
-    print("Gripper Position:\n\tGripper: {0:.2f}rad\n".format(data.position[6])$
+    print("Wheel Positions:\n\tLeft: {0:.2f}rad\n\tRight: {0:.2f}rad\n\n".format(data.position[0],data.position[1]))  
+    print("Joint Positions:\n\tShoulder1: {0:.2f}rad\n\tShoulder2: {0:.2f}rad\n\tElbow: {0:.2f}rad\n\tWrist: {0:.2f}rad\n\n".format(data.position[2],data.position[3],data.position[4],data.position[5]))  
+    print("Gripper Position:\n\tGripper: {0:.2f}rad\n".format(data.position[6]))
     print("----------")  
   
-# listens to the "joint_states" topic and sends them to "joint_callback" for pr$
+# listens to the "joint_states" topic and sends them to "joint_callback" for processing
 def read_joint_states():  
     rospy.Subscriber("joint_states",JointState,joint_callback)  
   
@@ -27,7 +27,7 @@ def clean_joint_states(data):
   
 # publishes a set of joint commands to the 'joint_trajectory_point' topic 
 def move_arm(x):  
-    jointpub = rospy.Publisher('joint_trajectory_point',Float64MultiArray, queu$
+    jointpub = rospy.Publisher('joint_trajectory_point',Float64MultiArray, queue_size=10)
     joint_pos = Float64MultiArray()  
 #   Joint Position vector should contain 6 elements: 
 #   [0, shoulder1, shoulder2, elbow, wrist, gripper] 
@@ -50,3 +50,5 @@ if __name__ == '__main__':
             x -= 0.01
             move_arm(x)
             rate.sleep()
+
+
