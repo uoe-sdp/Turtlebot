@@ -1,0 +1,1 @@
+TurtleBot3 ROS2 Jazzy relative and absolute files updated from Humble versions. Download the rest of the TurtleBot3 Example filed from the Robotis GitHub prior to downloading these two files. Overwrite the existing files with our versions before building your TurtleBot workspace. See our TurtleBot3 ROS2 Jazzy Guide on our SharePoint for full instructions.
